@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="62ad70d0-e4da-4498-bc41-7a85e7071e7b" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="choicerouterFlow" doc:id="e00f0442-ba15-4729-99bd-65abf7760a60" >
+		<http:listener doc:name="Listener" doc:id="98c03d3d-6dee-4ae7-9276-2255f93b0859" config-ref="HTTP_Listener_config" path="/ship"/>
+		<set-payload value='#["US"]' doc:name='"US"' doc:id="db2bc39f-fe50-4423-b3ed-79a3d77583a7" />
+		<choice doc:name="Choice" doc:id="a76fe749-c380-4f36-89a0-4477e18f7a64" >
+			<when expression="#[payload=='US']">
+				<flow-ref doc:name="domesticShipping" doc:id="0491606d-3e64-44b4-9cc4-bd88e6cee887" name="domesticShipping"/>
+			</when>
+			<otherwise >
+				<set-variable value="ksglid" doc:name="InternationalShipping" doc:id="0c2564fb-3a36-45ce-ae41-e46acb46aa29" variableName="kxs"/>
+			</otherwise>
+		</choice>
+	</flow>
+	<sub-flow name="domesticShipping" doc:id="f27a9bc7-7a54-4622-b7d0-47c424fa651e" >
+		<set-variable value="cars" doc:name="Set Variable" doc:id="a1e8b8dd-d142-4ca0-a0da-00e0ce0df76c" variableName="vars"/>
+	</sub-flow>
+</mule>
