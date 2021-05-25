@@ -16,6 +16,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 			</when>
 			<otherwise >
 				<set-variable value="ksglid" doc:name="InternationalShipping" doc:id="0c2564fb-3a36-45ce-ae41-e46acb46aa29" variableName="kxs"/>
+				<logger level="INFO" doc:name="Logger" doc:id="76fda685-45ad-47f3-a2e1-a64a7f14084b" message='#["Country is not US"]'/>
 			</otherwise>
 		</choice>
 	</flow>
